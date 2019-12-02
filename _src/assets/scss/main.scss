@@ -1,0 +1,21 @@
+.selected {
+    background-color: black;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+.wrapper{
+    display: flex;
+   width: 100%;
+}
+.divfavourites {
+    background-color: brown;
+    width: 50%;
+
+}
+.divresults{
+    background-color: cyan;
+    width: 50%;
+}
