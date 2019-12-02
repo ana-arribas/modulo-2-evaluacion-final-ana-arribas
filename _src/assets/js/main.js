@@ -8,9 +8,13 @@ const urlBase = 'http://api.tvmaze.com/search/shows?q=';
 const container = document.querySelector('#container');
 const favouritesList = document.querySelector('#favouriteslist');
 
-// function init() {
-//     getFavouritesShows();
-// }
+function init() {
+    const myLocalStorage = localStorage.getItem("settingFavourites");
+    if (myLocalStorage !== null) {
+        favouritesArray = JSON.parse(myLocalStorage);
+    }
+    paintList(favouritesArray);
+}
 
 function searchHandler() {
     const inputValue = input.value.toLowerCase();
@@ -84,6 +88,12 @@ function setShows(event) {
     addNewVisited(selectedShows);
 }
 
+const paintList = (array) => {
+    for (let item of array) {
+        addNewVisited(item)
+    }
+}
+
 const addNewVisited = (obj) => {
     favouritesList.innerHTML += `<span>${obj.name}</span><img src=${obj.img}>`
 }
@@ -93,4 +103,4 @@ const addNewVisited = (obj) => {
 
 form.addEventListener('submit', introForSearch);
 button.addEventListener('click', searchHandler);
-// window.addEventListener('load', init);
+window.addEventListener('load', init);
