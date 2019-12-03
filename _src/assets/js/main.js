@@ -11,9 +11,9 @@ const favouritesList = document.querySelector('#favourites-list');
 const init = () => {
     const myLocalStorage = localStorage.getItem("settingFavourites");
     if (myLocalStorage !== null) {
-        favouritesArray = JSON.parse(myLocalStorage);
+        arrayFavourites = JSON.parse(myLocalStorage);
     }
-    paintList(favouritesArray);
+    paintList(arrayFavourites);
 };
 
 const searchHandler = () => {
@@ -38,9 +38,8 @@ const displayShows = arrayFromFetch => {
         else {
             elementImg.src = show.show.image.medium;
         }
-        elementLi.classList.add('classli');
-        elementSpan.classList.add('classspan');
-        elementImg.classList.add('classimg');
+        elementSpan.classList.add('dynamic-class-span');
+        elementImg.classList.add('dynamic-class-img');
         elementLi.addEventListener('click', chooseFavourite);
         elementLi.addEventListener('click', setShows);
         elementLi.appendChild(elementSpan);
@@ -59,26 +58,26 @@ const introForSearch = event => {
     searchHandler();
 };
 
-let favouritesArray = [];
+let arrayFavourites = [];
 const setShows = event => {
-    const showTitle = event.currentTarget.querySelector('.classspan');
-    const showImage = event.currentTarget.querySelector('.classimg');
-    let selectedShows = {
+    const showTitle = event.currentTarget.querySelector('.dynamic-class-span');
+    const showImage = event.currentTarget.querySelector('.dynamic-class-img');
+    let objectSelectedShows = {
         name: showTitle.innerHTML,
         img: showImage.src
     };
-    favouritesArray.push(selectedShows);
-    localStorage.setItem('settingFavourites', JSON.stringify(favouritesArray));
-    addNewVisited(selectedShows);
+    arrayFavourites.push(objectSelectedShows);
+    localStorage.setItem('settingFavourites', JSON.stringify(arrayFavourites));
+    PermanentList(objectSelectedShows);
 };
 
-const paintList = array => {
-    for (let item of array) {
-        addNewVisited(item)
+const paintList = myArray => {
+    for (let singleObject of myArray) {
+        PermanentList(singleObject);
     }
 };
 
-const addNewVisited = clickedShow => {
+const PermanentList = clickedShow => {
     const favouriteSpan = document.createElement('span');
     const favouriteImg = document.createElement('img');
     favouriteSpan.innerHTML = clickedShow.name;
