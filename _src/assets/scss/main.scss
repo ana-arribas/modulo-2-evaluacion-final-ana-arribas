@@ -2,20 +2,18 @@
     background-color: black;
     color: white;
 }
-
 .hidden {
     display: none;
 }
-.wrapper{
+.main-wrapper{
     display: flex;
    width: 100%;
 }
-.divfavourites {
+.fav-container {
     background-color: brown;
-    width: 50%;
-
+    width: 30%;
 }
-.divresults{
+.results-container{
     background-color: cyan;
-    width: 50%;
+    width: 70%;
 }
