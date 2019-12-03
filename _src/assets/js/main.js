@@ -107,21 +107,11 @@ const PermanentList = clickedShow => {
 const deleteFavourite = event => {
     const myLocalStorage = localStorage.getItem("settingFavourites");
     event.target.closest('li').remove();
-
     arrayFavourites = JSON.parse(myLocalStorage);
-    // for (let object of arrayFavourites) {
     const elementSelected = event.target.parentElement.innerHTML;
     const indexOfElement = arrayFavourites.indexOf(elementSelected);
 
     console.log(indexOfElement);
-    // }
-
-    // const elementSelected = event.target.parentElement.innerHTML;
-    // const indexOfElement = arrayFavourites.indexOf(singleObject);
-
-    // console.log(indexOfElement);
-
-
 };
 
 button.addEventListener('click', hidePreviousResults);
