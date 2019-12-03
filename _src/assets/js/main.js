@@ -5,7 +5,6 @@ const input = document.querySelector('#input');
 const resultsList = document.querySelector('#results-list');
 const button = document.querySelector('#button');
 const urlBase = 'http://api.tvmaze.com/search/shows?q=';
-const container = document.querySelector('#results-container');
 const favouritesList = document.querySelector('#favourites-list');
 
 const init = () => {
@@ -45,7 +44,6 @@ const displayShows = arrayFromFetch => {
         elementLi.appendChild(elementSpan);
         elementLi.appendChild(elementImg);
         resultsList.appendChild(elementLi);
-        container.appendChild(resultsList);
     }
 };
 
@@ -56,6 +54,12 @@ const chooseFavourite = event => {
 const introForSearch = event => {
     event.preventDefault();
     searchHandler();
+};
+
+const hidePreviousResults = () => {
+    if (resultsList.innerHTML !== null) {
+        resultsList.innerHTML = '';
+    }
 };
 
 let arrayFavourites = [];
@@ -86,6 +90,7 @@ const PermanentList = clickedShow => {
     favouritesList.appendChild(favouriteImg);
 };
 
+button.addEventListener('click', hidePreviousResults);
 button.addEventListener('click', searchHandler);
 form.addEventListener('submit', introForSearch);
 window.addEventListener('load', init);
