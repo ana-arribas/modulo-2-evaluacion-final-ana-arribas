@@ -8,7 +8,6 @@ const urlBase = 'http://api.tvmaze.com/search/shows?q=';
 const favouritesList = document.querySelector('#favourites-list');
 let arrayFavourites = [];
 let series;
-const newButton = document.querySelector('#new-button');
 
 const init = () => {
     const myLocalStorage = localStorage.getItem("settingFavourites");
@@ -37,9 +36,7 @@ const displayShows = arrayFromFetch => {
             const elementLi = document.createElement('li');
             const elementImg = document.createElement('img');
             const elementSpan = document.createElement('span');
-            const time = document.createElement('p');
             elementSpan.innerHTML = show.show.name;
-            time.innerHTML = show.show.schedule.time;
             if (show.show.image === null) {
                 elementImg.src = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
             }
@@ -48,11 +45,11 @@ const displayShows = arrayFromFetch => {
             }
             elementSpan.classList.add('dynamic-class-span');
             elementImg.classList.add('dynamic-class-img');
+            elementLi.classList.add('list-item');
             elementLi.addEventListener('click', chooseFavourite);
             elementLi.addEventListener('click', setShows);
             elementLi.appendChild(elementSpan);
             elementLi.appendChild(elementImg);
-            elementLi.appendChild(time);
             resultsList.appendChild(elementLi);
         }
     }
@@ -101,38 +98,32 @@ const PermanentList = clickedShow => {
     const favouriteDelete = document.createElement('button');
     favouriteSpan.innerHTML = clickedShow.name;
     favouriteImg.src = clickedShow.img;
-    favouriteDelete.innerHTML = 'Borrar';
+    favouriteDelete.innerHTML = 'Quitar de favoritos';
     favouriteDelete.classList.add('delete');
+    favouriteLi.classList.add('fav-list-item');
+    favouriteSpan.classList.add('fav-list-title');
     favouriteLi.appendChild(favouriteSpan);
-    favouriteLi.appendChild(favouriteDelete);
     favouriteLi.appendChild(favouriteImg);
+    favouriteLi.appendChild(favouriteDelete);
     favouritesList.appendChild(favouriteLi);
     const allDeleteButtons = document.querySelectorAll('.delete');
-    for (let eachDeleteButton of allDeleteButtons) {
-        eachDeleteButton.addEventListener('click', deleteFavourite);
+    for (let i = 0; i < allDeleteButtons.length; i++) {
+        allDeleteButtons[i].setAttribute('index', i)
+        allDeleteButtons[i].addEventListener('click', deleteFavourite);
     }
 };
 
-
-function newFunction() {
-    for (let each of series) {
-        console.log(each.show.name);
-    }
-}
-//No se borra de localStorage porque sale index -1 en todos
-// const deleteFavourite = event => {
-//     const myLocalStorage = localStorage.getItem("settingFavourites");
-//     event.target.closest('li').remove();
-//     arrayFavourites = JSON.parse(myLocalStorage);
-//     const elementSelected = event.target.parentElement.innerHTML;
-//     const indexOfElement = arrayFavourites.indexOf(elementSelected);
-
-//     console.log(indexOfElement);
-// };
+const deleteFavourite = event => {
+    const myLocalStorage = JSON.parse(localStorage.getItem("settingFavourites"));
+    const elementSelectedIndex = event.target.index;
+    console.log(elementSelectedIndex)
+    const newFavoritesArray = myLocalStorage.splice(elementSelectedIndex, 1);
+    localStorage.setItem('settingFavourites', JSON.stringify(newFavoritesArray));
+    event.target.closest('li').remove();
+};
 
 
 button.addEventListener('click', hidePreviousResults);
 button.addEventListener('click', searchHandler);
 form.addEventListener('submit', introForSearch);
 window.addEventListener('load', init);
-newButton.addEventListener('click', newFunction);
